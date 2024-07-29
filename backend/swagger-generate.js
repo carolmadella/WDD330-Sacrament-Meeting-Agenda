@@ -8,7 +8,7 @@ const doc = {
     },
     host: [
         // 'localhost:3000',
-        'sacrament-program-api-1.onrender.com'
+        'wdd330-sacrament-meeting-agenda.onrender.com'
     ],
     schemes: [
         // 'http',

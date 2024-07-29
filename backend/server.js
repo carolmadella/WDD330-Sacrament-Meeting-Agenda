@@ -26,7 +26,7 @@ if (
   process.env.PORT &&
   process.env.NODE_ENV !== "production"
 ) {
-  config.baseURL = `http://localhost:${port}`;
+  config.baseURL = `${process.env.HOST}:${port}`;
 }
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
