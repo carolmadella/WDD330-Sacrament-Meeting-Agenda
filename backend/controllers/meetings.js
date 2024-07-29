@@ -22,24 +22,23 @@ const getAll = (req, res) => {
 
 const getSingle = (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Must use a valid meeting id to find a meeting.");
+    return res
+      .status(400)
+      .json("Must use a valid meeting id to find a meeting.");
   }
   const userId = new ObjectId(req.params.id);
   mongodb
     .getDb()
     .db(process.env.DB_NAME)
     .collection("meetings")
-    .find({
-      _id: userId,
-    })
+    .find({ _id: userId })
     .toArray((err, result) => {
       if (err) {
-        res.status(400).json({
-          message: err,
-        });
+        res.status(400).json({ message: err });
+      } else {
+        res.setHeader("Content-Type", "application/json");
+        res.status(200).json(result[0]);
       }
-      res.setHeader("Content-Type", "application/json");
-      res.status(200).json(result[0]);
     });
 };
 
@@ -61,7 +60,9 @@ const createMeeting = async (req, res) => {
     speaker3Theme: req.body.speaker3Theme,
     closingHymn: req.body.closingHymn,
     closingPrayer: req.body.closingPrayer,
+    updatedAt: new Date(),
   };
+
   const response = await mongodb
     .getDb()
     .db(process.env.DB_NAME)
@@ -83,7 +84,6 @@ const updateMeeting = async (req, res) => {
     res.status(400).json("Must use a valid meeting id to update a meeting.");
   }
   const userId = new ObjectId(req.params.id);
-  // be aware of updateOne if you only want to update specific fields
   const meeting = {
     date: req.body.date,
     presiding: req.body.presiding,
@@ -101,17 +101,21 @@ const updateMeeting = async (req, res) => {
     speaker3Theme: req.body.speaker3Theme,
     closingHymn: req.body.closingHymn,
     closingPrayer: req.body.closingPrayer,
+    updatedAt: new Date(), // Add updatedAt field
   };
+
+  // Add validation for required fields
+  if (!meeting.date || !meeting.presiding || !meeting.conductor) {
+    return res
+      .status(412)
+      .json({ error: "Precondition Failed: Missing required fields" });
+  }
+
   const response = await mongodb
     .getDb()
     .db(process.env.DB_NAME)
     .collection("meetings")
-    .replaceOne(
-      {
-        _id: userId,
-      },
-      meeting
-    );
+    .replaceOne({ _id: userId }, meeting);
   console.log(response);
   if (response.modifiedCount > 0) {
     res.status(204).json({ message: "Meeting updated successfully" });
@@ -133,12 +137,7 @@ const deleteMeeting = async (req, res) => {
     .getDb()
     .db(process.env.DB_NAME)
     .collection("meetings")
-    .remove(
-      {
-        _id: userId,
-      },
-      true
-    );
+    .deleteOne({ _id: userId }, true);
   console.log(response);
   if (response.deletedCount > 0) {
     res.status(204).json({ message: "Meeting deleted successfully" });
@@ -152,18 +151,25 @@ const deleteMeeting = async (req, res) => {
 };
 
 const getLatestMeeting = async (req, res) => {
-  const response = await mongodb
-    .getDb()
-    .db(process.env.DB_NAME)
-    .collection("meetings")
-    .find()
-    .sort({ updatedAt: -1 })
-    .limit(1)
-    .toArray();
-  if (response.length > 0) {
-    res.status(200).json(response[0]);
-  } else {
-    res.status(404).json({ message: "No meetings found" });
+  console.log("TESSTE");
+  try {
+    const response = await mongodb
+      .getDb()
+      .db(process.env.DB_NAME)
+      .collection("meetings")
+      .find()
+      .sort({ updatedAt: -1 })
+      .limit(1)
+      .toArray();
+    if (response.length > 0) {
+      res.status(200).json(response[0]);
+    } else {
+      res.status(404).json({ message: "No meetings found" });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching the latest meeting." });
   }
 };
 

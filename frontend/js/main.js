@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const agendaForm = document.getElementById("agenda-form");
   const addAgendaBtn = document.getElementById("add-agenda-btn");
   const viewLatestAgendaBtn = document.getElementById("view-latest-agenda-btn");
-  const latestAgenda = document.getElementById("latest-agenda");
   let currentAgendaId = null;
 
   addAgendaBtn.addEventListener("click", () => {
@@ -11,58 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     agendaForm.classList.toggle("d-none");
   });
 
-  viewLatestAgendaBtn.addEventListener("click", async () => {
-    try {
-      const meeting = await fetchLatestMeeting();
-      latestAgenda.innerHTML = `
-        <div class="card my-2">
-          <div class="card-body">
-            <h5 class="card-title">Latest Agenda</h5>
-            <p class="card-text"><strong>Date of Meeting:</strong> ${
-              meeting.date
-            }</p>
-            <p class="card-text"><strong>Presiding Leader:</strong> ${
-              meeting.presiding
-            }</p>
-            <p class="card-text"><strong>Conductor:</strong> ${
-              meeting.conductor
-            }</p>
-            <p class="card-text"><strong>Chorister:</strong> ${
-              meeting.chorister
-            }</p>
-            <p class="card-text"><strong>Accompanist:</strong> ${
-              meeting.accompanist
-            }</p>
-            <p class="card-text"><strong>Opening Hymn:</strong> ${getHymnName(
-              meeting.openingHymn
-            )}</p>
-            <p class="card-text"><strong>Opening Prayer:</strong> ${
-              meeting.openingPrayer
-            }</p>
-            <p class="card-text"><strong>Announcements:</strong> ${
-              meeting.announcements
-            }</p>
-            <p class="card-text"><strong>Speaker 1:</strong> ${
-              meeting.speaker1
-            } - ${meeting.speaker1Theme}</p>
-            <p class="card-text"><strong>Speaker 2:</strong> ${
-              meeting.speaker2
-            } - ${meeting.speaker2Theme}</p>
-            <p class="card-text"><strong>Speaker 3:</strong> ${
-              meeting.speaker3
-            } - ${meeting.speaker3Theme}</p>
-            <p class="card-text"><strong>Closing Hymn:</strong> ${getHymnName(
-              meeting.closingHymn
-            )}</p>
-            <p class="card-text"><strong>Closing Prayer:</strong> ${
-              meeting.closingPrayer
-            }</p>
-          </div>
-        </div>
-      `;
-    } catch (error) {
-      console.error("Error fetching the latest meeting:", error);
-    }
+  viewLatestAgendaBtn.addEventListener("click", () => {
+    window.location.href = "/view";
   });
 
   agendaForm.addEventListener("submit", async (event) => {
@@ -114,8 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
           (meeting) => `
         <div class="card my-2">
           <div class="card-body">
-            <h5 class="card-title">${meeting.date}</h5>
-            <p class="card-text">${meeting.conductor}</p>
+            <h5 class="card-title">Meeting Date: ${meeting.date}</h5>
             <button class="btn btn-primary" onclick="editMeeting('${meeting._id}')">Edit</button>
             <button class="btn btn-danger" onclick="deleteMeeting('${meeting._id}')">Delete</button>
           </div>
@@ -159,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.deleteMeeting = async (id) => {
     try {
       await deleteMeetingById(id);
-      loadMeetings(); // Refresh the UI after deletion
+      loadMeetings();
     } catch (error) {
       console.error("Error deleting meeting:", error);
     }

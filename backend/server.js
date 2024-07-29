@@ -35,12 +35,12 @@ app.use(auth(config));
 // Serve static files from the 'frontend' directory
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-// req.isAuthenticated is provided from the auth router
+// Route to serve index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index/index.html"));
 });
 
-// Add route to serve view.html
+// Route to serve view.html
 app.get("/view", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index/view.html"));
 });
