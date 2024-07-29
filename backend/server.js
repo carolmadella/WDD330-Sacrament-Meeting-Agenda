@@ -6,6 +6,7 @@ const http = require("http");
 const logger = require("morgan");
 const path = require("path");
 const { auth } = require("express-openid-connect");
+const cors = require("cors");
 const app = express();
 
 app.use(logger("dev"));
