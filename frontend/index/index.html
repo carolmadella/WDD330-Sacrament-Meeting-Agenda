@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sacrament Meeting Agenda</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="my-4">Sacrament Meeting Agenda</h1>
+      <button id="add-agenda-btn" class="btn btn-primary mb-4">
+        Add New Agenda
+      </button>
+      <button id="view-latest-agenda-btn" class="btn btn-secondary mb-4">
+        View Latest Agenda
+      </button>
+      <form id="agenda-form" class="d-none">
+        <!-- Form fields here -->
+        <div class="form-group">
+          <label for="meetingDate">Date of Meeting</label>
+          <input type="date" id="meetingDate" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="presiding">Presiding Leader</label>
+          <input type="text" id="presiding" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="conductor">Conductor</label>
+          <input type="text" id="conductor" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="chorister">Chorister</label>
+          <input type="text" id="chorister" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="accompanist">Accompanist</label>
+          <input type="text" id="accompanist" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="openingHymn">Opening Hymn</label>
+          <select id="openingHymn" class="form-control">
+            <option value="1">The Morning Breaks</option>
+            <option value="2">Come, Rejoice</option>
+            <option value="3">Now Let Us Rejoice</option>
+            <option value="4">High on the Mountain Top</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="openingPrayer">Opening Prayer</label>
+          <input type="text" id="openingPrayer" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="announcements">Announcements</label>
+          <textarea id="announcements" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="speaker1">Speaker 1</label>
+          <input type="text" id="speaker1" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="speaker1Theme">Speaker 1 Theme</label>
+          <input type="text" id="speaker1Theme" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="speaker2">Speaker 2</label>
+          <input type="text" id="speaker2" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="speaker2Theme">Speaker 2 Theme</label>
+          <input type="text" id="speaker2Theme" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="speaker3">Speaker 3</label>
+          <input type="text" id="speaker3" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="speaker3Theme">Speaker 3 Theme</label>
+          <input type="text" id="speaker3Theme" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="closingHymn">Closing Hymn</label>
+          <select id="closingHymn" class="form-control">
+            <option value="1">The Morning Breaks</option>
+            <option value="2">Come, Rejoice</option>
+            <option value="3">Now Let Us Rejoice</option>
+            <option value="4">High on the Mountain Top</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="closingPrayer">Closing Prayer</label>
+          <input type="text" id="closingPrayer" class="form-control" />
+        </div>
+        <button id="save-agenda-btn" type="submit" class="btn btn-primary">
+          Save Agenda
+        </button>
+      </form>
+      <div id="agenda-list"></div>
+      <div id="latest-agenda" class="mt-4"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
