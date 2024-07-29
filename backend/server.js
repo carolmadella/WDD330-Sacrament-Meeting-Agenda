@@ -20,6 +20,15 @@ const config = {
   issuerBaseURL: process.env.ISSUER_BASE_URL,
 };
 
+// Configure CORS
+app.use(
+  cors({
+    origin: "https://wdd330-sacrament-meeting-agenda.onrender.com",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
+
 if (
   !config.baseURL &&
   !process.env.BASE_URL &&
