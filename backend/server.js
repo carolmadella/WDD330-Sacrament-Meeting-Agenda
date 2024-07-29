@@ -23,7 +23,10 @@ const config = {
 // Configure CORS
 app.use(
   cors({
-    origin: "https://wdd330-sacrament-meeting-agenda.onrender.com",
+    origin: [
+      "https://wdd330-sacrament-meeting-agenda.onrender.com",
+      "http://localhost:3000",
+    ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
