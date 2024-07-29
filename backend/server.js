@@ -15,7 +15,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: process.env.SECRET,
-  baseURL: process.env.BASE_URL,
+  baseURL: process.env.RENDER_URL || "http://localhost:3000",
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
 };
@@ -26,7 +26,7 @@ if (
   process.env.PORT &&
   process.env.NODE_ENV !== "production"
 ) {
-  config.baseURL = `${process.env.HOST}:${port}`;
+  config.baseURL = `${process.env.BASE_URL}:${port}`;
 }
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
